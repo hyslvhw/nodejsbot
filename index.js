@@ -67,14 +67,14 @@ client.on('message', (message) => {
       .then(invite => {
         message.channel.send(invite.url)
       });
-      function checkPermission(message) {
-        if(!message.member.hasPermission("MANAGE_MESSAGES")) {
-          message.channel.send(`<@${message.author.id}> ` + "`You don't have any permission to do this :(`")
-          return true;
-        } else {
-          return false;
-        }
-      }
+  }
+  function checkPermission(message) {
+    if(!message.member.hasPermission("MANAGE_MESSAGES")) {
+      message.channel.send(`<@${message.author.id}> ` + "`You don't have any permission to do this :(`")
+      return true;
+    } else {
+      return false;
+    }
   }
 
   if(message.content.startsWith(';;공지')) {

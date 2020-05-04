@@ -8,7 +8,7 @@ const byeChannelComment = "`님께서 서버에서 퇴장하셨습니다`";
 
 client.on('ready', () => {
   console.log('Online');
-  client.user.setPresence({ game: { name: '!help를 쳐서 도움을 받아보세요!' }, status: 'online' })
+  client.user.setPresence({ game: { name: ';;help를 쳐서 도움을 받아보세요!' }, status: 'online' })
 });
 
 client.on("guildMemberAdd", (member) => {
@@ -33,13 +33,14 @@ client.on('message', (message) => {
   if(message.author.bot) return;
 
   if(message.content == ';;version') {
-    return message.reply('`NEW jsBot 0.0.2`');
+    return message.reply('`NEW jsBot 0.0.3`');
   }
 
-  if(message.content == '!help') {
+  if(message.content == ';;help') {
     let helpImg = 'https://images-ext-1.discordapp.net/external/RyofVqSAVAi0H9-1yK6M8NGy2grU5TWZkLadG-rwqk0/https/i.imgur.com/EZRAPxR.png';
     let commandList = [
-      {name: '!help', desc: '명령어 리스트'},
+      {name: ';;help', desc: '명령어 리스트'},
+      {name: ';;version', desc: '봇 버전 확인'},
       {name: ';;공지', desc: 'dm으로 전체 공지 보내기'},
       {name: ';;prune', desc: '텍스트 지움'},
       {name: ';;초대코드', desc: '초대 코드 표기'},
@@ -85,7 +86,7 @@ client.on('message', (message) => {
     var clearLine = message.content.slice(';;prune '.length);
     var isNum = !isNaN(clearLine)
 
-    if(isNum && (clearLine <= 0 || 100 < clearLine)) {
+    if(isNum && (clearLine <= 0 || 101 < clearLine)) {
       message.channel.send("You can only type 1 ~ 99")
       return;
     } else if(!isNum) { // c @나긋해 3
@@ -110,7 +111,7 @@ client.on('message', (message) => {
     } else {
       message.channel.bulkDelete(parseInt(clearLine)+1)
         .then(() => {
-          AutoMsgDelete(message, `<@${message.author.id}> ` + parseInt(clearLine) + "`messages deleted`");
+          AutoMsgDelete(message, `<@${message.author.id}> ` + "`" + parseInt(clearLine) + "messages deleted`");
         })
         .catch(console.error)
     }

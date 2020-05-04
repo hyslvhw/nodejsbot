@@ -48,6 +48,8 @@ client.on('message', (message) => {
       {name: ';;prune', desc: '텍스트 지움'},
 
       {name: ';;초대코드', desc: '초대 코드 표기'},
+
+      {name: ';;제작 및 도움', desc: '제작: 라벨입니다#5041 도움: 나긋해'}
     ];
     let commandStr = '';
     let embed = new Discord.RichEmbed()

@@ -40,9 +40,13 @@ client.on('message', (message) => {
     let helpImg = 'https://images-ext-1.discordapp.net/external/RyofVqSAVAi0H9-1yK6M8NGy2grU5TWZkLadG-rwqk0/https/i.imgur.com/EZRAPxR.png';
     let commandList = [
       {name: ';;help', desc: '명령어 리스트'},
+
       {name: ';;version', desc: '봇 버전 확인'},
+
       {name: ';;공지', desc: 'dm으로 전체 공지 보내기'},
+
       {name: ';;prune', desc: '텍스트 지움'},
+
       {name: ';;초대코드', desc: '초대 코드 표기'},
     ];
     let commandStr = '';
@@ -111,7 +115,7 @@ client.on('message', (message) => {
     } else {
       message.channel.bulkDelete(parseInt(clearLine)+1)
         .then(() => {
-          AutoMsgDelete(message, `<@${message.author.id}> ` + "`" + parseInt(clearLine) + "messages deleted`");
+          AutoMsgDelete(message, `<@${message.author.id}> ` + "`" + parseInt(clearLine) + " messages deleted`");
         })
         .catch(console.error)
     }

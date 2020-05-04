@@ -65,16 +65,8 @@ client.on('message', (message) => {
   } else if(message.content == ';;초대코드') {
     message.guild.channels.get(message.channel.id).createInvite({maxAge: 0}) // maxAge: 0은 무한이라는 의미, maxAge부분을 지우면 24시간으로 설정됨
       .then(invite => {
-        message.channel.send(invite.url)
+        message.channel.send("`" + invite.url + "`")
       });
-  }
-  function checkPermission(message) {
-    if(!message.member.hasPermission("MANAGE_MESSAGES")) {
-      message.channel.send(`<@${message.author.id}> ` + "`You don't have any permission to do this :(`")
-      return true;
-    } else {
-      return false;
-    }
   }
 
   if(message.content.startsWith(';;공지')) {

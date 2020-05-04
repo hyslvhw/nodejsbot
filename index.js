@@ -1,13 +1,14 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const token = process.env.token;
+const token = process.argv.length == 2 ? process.env.token : "";
 const welcomeChannelName = "입장";
 const byeChannelName = "퇴장";
-const welcomeChannelComment = "`님이 서버에 입장하셨습니다`";
-const byeChannelComment = "`님이 서버에서 퇴장하셨습니다`";
+const welcomeChannelComment = "`님께서 서버에 입장하셨습니다`";
+const byeChannelComment = "`님께서 서버에서 퇴장하셨습니다`";
 
 client.on('ready', () => {
-  console.log('NEW jsBot 0.0.2 is now Online!');
+  console.log('Online');
+  client.user.setPresence({ game: { name: '!help를 쳐서 도움을 받아보세요!' }, status: 'online' })
 });
 
 client.on("guildMemberAdd", (member) => {
@@ -32,7 +33,35 @@ client.on('message', (message) => {
   if(message.author.bot) return;
 
   if(message.content == ';;version') {
-    return message.reply('`NEW jsBot 0.0.1`');
+    return message.reply('`NEW jsBot 0.0.2`');
+  }
+
+  if(message.content == '!help') {
+    let helpImg = 'https://images-ext-1.discordapp.net/external/RyofVqSAVAi0H9-1yK6M8NGy2grU5TWZkLadG-rwqk0/https/i.imgur.com/EZRAPxR.png';
+    let commandList = [
+      {name: '!help', desc: '명령어 리스트'},
+      {name: ';;공지', desc: 'dm으로 전체 공지 보내기'},
+      {name: ';;prune', desc: '텍스트 지움'},
+      {name: ';;초대코드', desc: '초대 코드 표기'},
+    ];
+    let commandStr = '';
+    let embed = new Discord.RichEmbed()
+      .setAuthor('jsBot Support', helpImg)
+      .setColor('#186de6')
+      .setTimestamp()
+    
+    commandList.forEach(x => {
+      commandStr += `• \`\`${changeCommandStringLength(`${x.name}`)}\`\` : **${x.desc}**\n`;
+    });
+
+    embed.addField('Commands: ', commandStr);
+
+    message.channel.send(embed)
+  } else if(message.content == ';;초대코드') {
+    message.guild.channels.get(message.channel.id).createInvite({maxAge: 0}) // maxAge: 0은 무한이라는 의미, maxAge부분을 지우면 24시간으로 설정됨
+      .then(invite => {
+        message.channel.send(invite.url)
+      });
   }
 
   if(message.content.startsWith(';;공지')) {
@@ -41,31 +70,23 @@ client.on('message', (message) => {
       let contents = message.content.slice(';;공지'.length);
       message.member.guild.members.array().forEach(x => {
         if(x.user.bot) return;
-        x.user.send(`${contents}`);
+        x.user.send(`<@${message.author.id}> ${contents}`);
       });
   
-      return message.reply('`공지를 전송했습니다.`');
+      return message.reply('`공지 전송완료`');
     } else {
-      return message.reply('`채널에서 실행해주세요.`');
+      return message.reply('`채널에서 실행해주세요`');
     }
   }
-});
 
-function checkPermission(message) {
-  if(!message.member.hasPermission("MANAGE_MESSAGES")) {
-    message.channel.send(`<@${message.author.id}> ` + "`You don't have any permission to do this`")
-    return true;
-  } else {
-    return false;
-  }
-  if(message.content.startsWith('!청소')) {
+  if(message.content.startsWith(';;prune')) {
     if(checkPermission(message)) return
 
-    var clearLine = message.content.slice('!청소 '.length);
+    var clearLine = message.content.slice(';;prune '.length);
     var isNum = !isNaN(clearLine)
 
     if(isNum && (clearLine <= 0 || 100 < clearLine)) {
-      message.channel.send("1부터 100까지의 숫자만 입력해주세요.")
+      message.channel.send("You can only type 1 ~ 99")
       return;
     } else if(!isNum) { // c @나긋해 3
       if(message.content.split('<@').length == 2) {
@@ -89,16 +110,16 @@ function checkPermission(message) {
     } else {
       message.channel.bulkDelete(parseInt(clearLine)+1)
         .then(() => {
-          AutoMsgDelete(message, `<@${message.author.id}> ` + parseInt(clearLine) + "개의 메시지를 삭제했습니다. (이 메세지는 잠시 후에 사라집니다.)");
+          AutoMsgDelete(message, `<@${message.author.id}> ` + parseInt(clearLine) + "`messages deleted`");
         })
         .catch(console.error)
     }
   }
-};
+});
 
 function checkPermission(message) {
   if(!message.member.hasPermission("MANAGE_MESSAGES")) {
-    message.channel.send(`<@${message.author.id}> ` + "명령어를 수행할 관리자 권한을 소지하고 있지않습니다.")
+    message.channel.send(`<@${message.author.id}> ` + "`You don't have any permission to do this :(`")
     return true;
   } else {
     return false;

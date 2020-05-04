@@ -75,7 +75,7 @@ client.on('message', (message) => {
       let contents = message.content.slice(';;공지'.length);
       message.member.guild.members.array().forEach(x => {
         if(x.user.bot) return;
-        x.user.send(`<@${message.author.id}> ${contents}`);
+        x.user.send(`*${contents}*`);
       });
   
       return message.reply('`공지 전송완료`');

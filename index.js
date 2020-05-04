@@ -33,7 +33,7 @@ client.on('message', (message) => {
   if(message.author.bot) return;
 
   if(message.content == ';;버전') {
-    return message.reply('`NEW jsBot 0.0.3`');
+    return message.reply('`Renewaled jsBot 0.0.3 한글패치`');
   }
 
   if(message.content == ';;도움') {
@@ -89,7 +89,7 @@ client.on('message', (message) => {
   if(message.content.startsWith(';;청소')) {
     if(checkPermission(message)) return
 
-    var clearLine = message.content.slice(';;prune '.length);
+    var clearLine = message.content.slice(';;청소 '.length);
     var isNum = !isNaN(clearLine)
 
     if(isNum && (clearLine <= 0 || 99 < clearLine)) {

@@ -86,8 +86,8 @@ client.on('message', (message) => {
     var clearLine = message.content.slice(';;prune '.length);
     var isNum = !isNaN(clearLine)
 
-    if(isNum && (clearLine <= 0 || 101 < clearLine)) {
-      message.channel.send("You can only type 1 ~ 99")
+    if(isNum && (clearLine <= 0 || 99 < clearLine)) {
+      message.channel.send("`You can only type 1 ~ 99`")
       return;
     } else if(!isNum) { // c @나긋해 3
       if(message.content.split('<@').length == 2) {

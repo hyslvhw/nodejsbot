@@ -32,7 +32,7 @@ client.on('message', (message) => {
   if(message.author.bot) return;
 
   if(message.content == ';;version') {
-    return message.reply('NEW jsBot 0.0.1');
+    return message.reply('`NEW jsBot 0.0.1`');
   }
 
   if(message.content.startsWith(';;공지')) {
@@ -44,9 +44,9 @@ client.on('message', (message) => {
         x.user.send(`${contents}`);
       });
   
-      return message.reply('공지를 전송했습니다.');
+      return message.reply('`공지를 전송했습니다.`');
     } else {
-      return message.reply('채널에서 실행해주세요.');
+      return message.reply('`채널에서 실행해주세요.`');
     }
   }
 });
@@ -59,5 +59,6 @@ function checkPermission(message) {
     return false;
   }
 }
+
 
 client.login(token);

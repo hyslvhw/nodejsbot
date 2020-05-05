@@ -37,6 +37,22 @@ client.on('message', (message) => {
     return message.reply('`Renewaled jsBot 0.0.5 한글패치`');
   }
 
+  if(message.content == ';;서버상태') {
+    let embed = new Discord.RichEmbed()
+    let img = 'https://discordapp.com/channels/706768367301820469/706768367956000793/707164004753211404';
+    var duration = moment.duration(client.uptime).format(" D [일], H [시간], m [분], s [초]");
+    embed.setColor('#186de6')
+    embed.setAuthor('Server Information', img)
+    embed.setFooter(`js Support Bot`)
+    embed.addField('RAM usage',    `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true);
+    embed.addField('running time', `${duration}`, true);
+    embed.addField('user',         `${client.users.size.toLocaleString()}`, true);
+    embed.addField('server',       `${client.guilds.size.toLocaleString()}`, true);
+    embed.addField('channel',      `${client.channels.size.toLocaleString()}`, true);
+    embed.addField('Discord.js',   `v${Discord.version}`, true);
+    embed.addField('Node',         `${process.version}`, true);
+  }
+
   if(message.content == ';;도움') {
     let helpImg = 'https://images-ext-1.discordapp.net/external/RyofVqSAVAi0H9-1yK6M8NGy2grU5TWZkLadG-rwqk0/https/i.imgur.com/EZRAPxR.png';
     let commandList = [
@@ -71,7 +87,7 @@ client.on('message', (message) => {
     }
     message.guild.channels.get(message.channel.id).createInvite({maxAge: 0}) // maxAge: 0은 무한이라는 의미, maxAge부분을 지우면 24시간으로 설정됨
       .then(invite => {
-        message.channel.send(invite.url)
+        message.channel.send("`" + invite.url + "`")
       })
       .catch((err) => {
         if(err.code == 50013) {

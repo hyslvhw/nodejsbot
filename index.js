@@ -51,6 +51,8 @@ client.on('message', (message) => {
     embed.addField('channel',      `${client.channels.size.toLocaleString()}`, true);
     embed.addField('Discord.js',   `v${Discord.version}`, true);
     embed.addField('Node',         `${process.version}`, true);
+
+    message.channel.send(embed)
   }
 
   if(message.content == ';;도움') {

@@ -76,17 +76,25 @@ client.on('message', (message) => {
     if(checkPermission(message)) return
     if(message.member != null) { // 채널에서 공지 쓸 때
       let contents = message.content.slice(';;공지'.length);
+      let embed = new Discord.RichEmbed()
+        .setAuthor('관리자로부터 공지가 도착했습니다')
+        .setColor('#5100BF')
+        .setFooter(`jsBot 공지`)
+        .setTimestamp()
+  
+      embed.addField('공지: ', contents);
+  
       message.member.guild.members.array().forEach(x => {
         if(x.user.bot) return;
-        x.user.send(`**${contents}**`);
+        x.user.send(embed)
       });
   
-      return message.reply('`공지 전송완료`');
+      return message.reply('공지를 전송했습니다.');
     } else {
-      return message.reply('`채널에서 실행해주세요`');
+      return message.reply('채널에서 실행해주세요.');
     }
   }
-
+  
   if(message.content.startsWith(';;청소')) {
     if(checkPermission(message)) return
 

@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "discord.js": "^11.5.1",
+    "moment-duration-format": "^2.2.1",
+    "moment-timezone": "^0.5.28",
     "opusscript": "0.0.7",
     "ytdl-core": "^2.1.1"
   }

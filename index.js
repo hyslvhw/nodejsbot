@@ -6,6 +6,9 @@ const byeChannelName = "퇴장";
 const welcomeChannelComment = "`님께서 서버에 입장하셨습니다`";
 const byeChannelComment = "`님께서 서버에서 퇴장하셨습니다`";
 const prefix = ';;';
+const moment = require("moment");
+require("moment-duration-format");
+
 
 client.on('ready', () => {
   console.log('Online');
@@ -51,19 +54,8 @@ client.on('message', (message) => {
     embed.addField('server',       `${client.guilds.size.toLocaleString()}`, true);
     embed.addField('channel',      `${client.channels.size.toLocaleString()}`, true);
     embed.addField('Discord.js',   `v${Discord.version}`, true);
-    embed.addField('Node',         `${process.version}`, true);
+    //embed.addField('Node',         `${process.version}`, true);
     
-    let arr = client.guilds.array();
-    let list = '';
-    list = `\`\`\`css\n`;
-    
-    for(let i=0;i<arr.length;i++) {
-      // list += `${arr[i].name} - ${arr[i].id}\n`
-      list += `${arr[i].name}\n`
-    }
-    list += `\`\`\`\n`
-    embed.addField('list:',        `${list}`);
-
     embed.setTimestamp()
     message.channel.send(embed);
   }

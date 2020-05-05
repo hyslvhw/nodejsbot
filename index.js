@@ -5,17 +5,7 @@ const welcomeChannelName = "입장";
 const byeChannelName = "퇴장";
 const welcomeChannelComment = "`님께서 서버에 입장하셨습니다`";
 const byeChannelComment = "`님께서 서버에서 퇴장하셨습니다`";
-
-var servers = {};
-
-if(message.content == ";;play"){
-  if (!args[1]) {
-    message.channel.sendMessage("`주소를 포함해주세요`");
-    return;
-  }
-
-  
-}
+const prefix = ';;';
 
 client.on('ready', () => {
   console.log('Online');
@@ -162,6 +152,61 @@ async function AutoMsgDelete(message, str, delay = 3000) {
     msg.delete();
   }, delay);
 }
+
+const ytdl = require("ytdl-core");
+
+var version = '1.2';
+
+var servers = {};
+
+client.on('message', messasge => {
+
+  let args = message.content.substring(prefix.length).split(" ");
+
+  switch (args[0]) {
+    case 'play':
+
+        function play(connection, message){
+          var server = servers[message.guild.id];
+
+          server.dispatcher = connection.playStream(ytdl(server.queue[0], {filter: "audioonly"}));
+
+          server.queue.shift();
+
+          server.dispatcher.on("end", function(){
+            if(server.queue[0]){
+              play(connection, message);
+            }else {
+              connection.disconnect();
+            }
+          });
+        }
+
+      if(!args[1]){
+        message.channel.send("`주소를 첨부해야합니다`")
+        return;
+      }
+
+      if(!message.member.voiceChannel){
+        message.channel.send("`음성채널에 참가하셔야합니다`");
+        return;
+      }
+
+      if(!servers[message.guild.id]) servers[message.guild.id] = {
+        queue: []
+      }
+
+      var server = servers[message.guild.id];
+
+      server.queue.push(args[1]);
+
+      if(!message.guild.voiceConnection) message.member.voiceChannel.join().then(function(connection){
+        play(connection, message);
+      })
+
+    break;
+  }
+})
 
 
 client.login(token);

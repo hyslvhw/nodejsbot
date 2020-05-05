@@ -47,7 +47,6 @@ client.on('message', (message) => {
     embed.setColor('#BF0000')
     embed.setAuthor('Server Info', img)
     embed.setFooter('js Support Bot')
-    embed.addBlankField()
     embed.addField('RAM usage',    `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true);
     embed.addField('running time', `${duration}`, true);
     embed.addField('user',         `${client.users.size.toLocaleString()}`, true);

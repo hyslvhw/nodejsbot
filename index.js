@@ -39,11 +39,12 @@ client.on('message', (message) => {
 
   if(message.content == ';;서버상태') {
     let embed = new Discord.RichEmbed()
-    let img = 'https://discordapp.com/channels/706768367301820469/706768367956000793/707164004753211404';
+    let img = 'https://cdn.discordapp.com/attachments/706768367956000793/707164004887429162/d908a378a563cb86.png';
     var duration = moment.duration(client.uptime).format(" D [일], H [시간], m [분], s [초]");
-    embed.setColor('#186de6')
-    embed.setAuthor('Server Information', img)
+    embed.setColor('#BF0000')
+    embed.setAuthor('Server Info', img)
     embed.setFooter(`js Support Bot`)
+    embed.addBlankField()
     embed.addField('RAM usage',    `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true);
     embed.addField('running time', `${duration}`, true);
     embed.addField('user',         `${client.users.size.toLocaleString()}`, true);
@@ -51,7 +52,7 @@ client.on('message', (message) => {
     embed.addField('channel',      `${client.channels.size.toLocaleString()}`, true);
     embed.addField('Discord.js',   `v${Discord.version}`, true);
     embed.addField('Node',         `${process.version}`, true);
-
+    
     let arr = client.guilds.array();
     let list = '';
     list = `\`\`\`css\n`;

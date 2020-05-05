@@ -6,6 +6,17 @@ const byeChannelName = "퇴장";
 const welcomeChannelComment = "`님께서 서버에 입장하셨습니다`";
 const byeChannelComment = "`님께서 서버에서 퇴장하셨습니다`";
 
+var servers = {};
+
+if(message.content == ";;play"){
+  if (!args[1]) {
+    message.channel.sendMessage("`주소를 포함해주세요`");
+    return;
+  }
+
+  
+}
+
 client.on('ready', () => {
   console.log('Online');
   client.user.setPresence({ game: { name: ';;도움 을 쳐서 도움을 받아보세요!' }, status: 'online' })

@@ -5,14 +5,14 @@ const welcomeChannelName = "입장";
 const byeChannelName = "퇴장";
 const welcomeChannelComment = "`님께서 서버에 입장하셨습니다`";
 const byeChannelComment = "`님께서 서버에서 퇴장하셨습니다`";
-const prefix = ';;';
+const prefix = 'j!';
 const moment = require("moment");
 require("moment-duration-format");
 
 
 client.on('ready', () => {
   console.log('Online');
-  client.user.setPresence({ game: { name: ';;도움 을 쳐서 도움을 받아보세요!' }, status: 'online' })
+  client.user.setPresence({ game: { name: 'j!help' }, status: 'online' })
 });
 
 client.on("guildMemberAdd", (member) => {
@@ -36,11 +36,11 @@ client.on("guildMemberRemove", (member) => {
 client.on('message', (message) => {
   if(message.author.bot) return;
 
-  if(message.content == ';;버전') {
-    return message.reply('`Renewaled jsBot 0.0.5 한글패치`');
+  if(message.content == 'j!version') {
+    return message.reply('`Renewaled jsBot 0.1.1`');
   }
 
-  if(message.content == ';;서버상태') {
+  if(message.content == 'j!status') {
     let embed = new Discord.RichEmbed()
     let img = 'https://cdn.discordapp.com/attachments/706768367956000793/707164004887429162/d908a378a563cb86.png';
     var duration = moment.duration(client.uptime).format(" D [일], H [시간], m [분], s [초]");
@@ -59,22 +59,22 @@ client.on('message', (message) => {
     message.channel.send(embed);
   }
 
-  if(message.content == ';;도움') {
+  if(message.content == 'j!help') {
     let helpImg = 'https://images-ext-1.discordapp.net/external/RyofVqSAVAi0H9-1yK6M8NGy2grU5TWZkLadG-rwqk0/https/i.imgur.com/EZRAPxR.png';
     let commandList = [
-      {name: ';;도움', desc: '명령어 리스트'},
+      {name: 'j!help', desc: '명령어 리스트'},
 
-      {name: ';;버전', desc: '봇 버전 확인'},
+      {name: 'j!version', desc: '봇 버전 확인'},
 
-      {name: ';;공지', desc: 'dm으로 전체 공지 보내기'},
+      {name: 'j!announce', desc: 'dm으로 전체 공지 보내기'},
 
-      {name: ';;청소', desc: '텍스트 지움'},
+      {name: 'j!clean', desc: '텍스트 지움'},
 
-      {name: ';;초대코드', desc: '초대 코드 표기'},
+      {name: 'j!invite', desc: '초대 코드 표기'},
 
-      {name: ';;서버상태', desc: '서버의 상태를 표시해줍니다'},
+      {name: 'j!status', desc: '서버의 상태를 표시해줍니다'},
 
-      {name: '제작 및 도움', desc: '제작: 0utS1D3R 도움: 나긋해'}
+      {name: 'MAKE & HELP', desc: '제작: 0utS1D3R 도움: 나긋해'}
     ];
     let commandStr = '';
     let embed = new Discord.RichEmbed()
@@ -89,7 +89,7 @@ client.on('message', (message) => {
     embed.addField('Commands: ', commandStr);
 
     message.channel.send(embed)
-  } else if(message.content == ';;초대코드') {
+  } else if(message.content == 'j!invite') {
     if(message.channel.type == 'dm') {
       return message.reply('`dm에서 사용할 수 없는 명령어 입니다.`');
     }
@@ -104,17 +104,17 @@ client.on('message', (message) => {
       })
   }
 
-  if(message.content.startsWith(';;공지')) {
+  if(message.content.startsWith('j!announce')) {
     if(checkPermission(message)) return
     if(message.member != null) { // 채널에서 공지 쓸 때
-      let contents = message.content.slice(';;공지'.length);
+      let contents = message.content.slice('j!announce'.length);
       let embed = new Discord.RichEmbed()
-        .setAuthor('관리자로부터 공지가 도착했습니다')
+        .setAuthor('공지가 도착했습니다')
         .setColor('#5100BF')
         .setFooter(`jsBot 공지`)
         .setTimestamp()
   
-      embed.addField('내용: ', contents);
+      embed.addField('내용 ', contents);
   
       message.member.guild.members.array().forEach(x => {
         if(x.user.bot) return;
@@ -127,10 +127,10 @@ client.on('message', (message) => {
     }
   }
 
-  if(message.content.startsWith(';;청소')) {
+  if(message.content.startsWith('j!clean')) {
     if(checkPermission(message)) return
 
-    var clearLine = message.content.slice(';;청소 '.length);
+    var clearLine = message.content.slice('j!clean '.length);
     var isNum = !isNaN(clearLine)
 
     if(isNum && (clearLine <= 0 || 99 < clearLine)) {

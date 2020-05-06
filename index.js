@@ -72,6 +72,8 @@ client.on('message', (message) => {
 
       {name: ';;초대코드', desc: '초대 코드 표기'},
 
+      {name: ';;서버상태', desc: '서버의 상태를 표시해줍니다'},
+
       {name: '제작 및 도움', desc: '제작: 0utS1D3R 도움: 나긋해'}
     ];
     let commandStr = '';
